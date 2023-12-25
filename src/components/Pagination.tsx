@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Stack, Button, Text, ThemeTypings } from '@chakra-ui/react';
 import { usePagination } from './usePagination';
-
 
 type PaginationItemProps = {
     isCurrent?: boolean;
@@ -11,12 +10,13 @@ type PaginationItemProps = {
 };
 
 type PaginationProps = {
-    onPageChange: (page: number) => void;
-    currentPage: number;
+    onPageChange?: (page: number) => void;
+    currentPage?: number;
     colorScheme?: ThemeTypings['colorSchemes'];
-    total: number;
+    total?: number;
+    perPage?: number;
+    buttonCounts?: 1 | 2;
 };
-
 
 function PaginationItem({ isCurrent = false, page, onPageChange, colorScheme }: PaginationItemProps) {
     if (isCurrent) {
@@ -45,7 +45,7 @@ function PaginationItem({ isCurrent = false, page, onPageChange, colorScheme }: 
             bg='gray.200'
             textColor={colorScheme}
             _hover={{
-                bg: 'gray.300',
+                bg: `${colorScheme}.100`,
             }}
             onClick={() => onPageChange(page)}
         >
@@ -56,35 +56,30 @@ function PaginationItem({ isCurrent = false, page, onPageChange, colorScheme }: 
 
 
 
-export function Pagination({ currentPage, onPageChange, colorScheme, total }: PaginationProps) {
+export function Pagination({ currentPage = 1, onPageChange = () => { }, colorScheme = 'blackAlpha', total = 0, perPage = 10, buttonCounts = 1 }: PaginationProps) {
     const {
         siblingsCount,
         previousPages,
         nextPages,
         lastPage,
+        totalPages,
     } = usePagination({
         totalRegisters: total,
         page: currentPage,
+        siblingsCount: buttonCounts,
+        registersPerPage: perPage,
     });
+
     if (total === 0) return '';
 
-    return (
-        <Stack direction='row' mt='8' justify='center' align='center' spacing='6' margin={1}>
-            <Stack direction='row' spacing='4'>
-                <Button
-                    size='sm'
-                    fontSize='xs'
-                    width='4'
-                    colorScheme={colorScheme}
-                    isDisabled={currentPage == 1}
-                    variant='outline'
-                    _disabled={{
-                        bg: `${colorScheme}.500`,
-                        cursor: 'pointer',
-                    }}
-                >
-                    &#60;
-                </Button>
+    const renderPages = useMemo(() => {
+        if (totalPages <= 5) {
+            return new Array(totalPages).fill(0).map((_, index) => (
+                <PaginationItem colorScheme={colorScheme} onPageChange={onPageChange} isCurrent={index+1 === currentPage} page={index + 1} key={index + 1} />
+            ));
+        }
+        return (
+            <>
                 {currentPage > 1 + siblingsCount ? (
                     <>
                         <PaginationItem colorScheme={colorScheme} onPageChange={onPageChange} page={1} />
@@ -120,6 +115,24 @@ export function Pagination({ currentPage, onPageChange, colorScheme, total }: Pa
                         <PaginationItem colorScheme={colorScheme} onPageChange={onPageChange} page={lastPage} />
                     </>
                 ) : null}
+            </>
+        )
+    }, [currentPage, siblingsCount, previousPages, nextPages, lastPage, colorScheme]);
+    return (
+        <Stack direction='row' mt='8' justify='center' align='center' spacing='6' margin={1}>
+            <Stack direction='row' spacing='2'>
+                <Button
+                    size='sm'
+                    fontSize='xs'
+                    width='4'
+                    colorScheme={colorScheme}
+                    isDisabled={currentPage == 1}
+                    variant='outline'
+                    onClick={() => onPageChange(currentPage - 1)}
+                >
+                    &#60;
+                </Button>
+                {renderPages}
                 <Button
                     size='sm'
                     fontSize='xs'
@@ -127,10 +140,7 @@ export function Pagination({ currentPage, onPageChange, colorScheme, total }: Pa
                     colorScheme={colorScheme}
                     isDisabled={currentPage === lastPage}
                     variant='outline'
-                    _disabled={{
-                        bg: `${colorScheme}.500`,
-                        cursor: 'pointer',
-                    }}
+                    onClick={() => onPageChange(currentPage + 1)}
                 >
                     &#62;
                 </Button>
