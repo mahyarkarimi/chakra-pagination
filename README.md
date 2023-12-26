@@ -74,7 +74,7 @@ const [currentPage, setCurrentPage] = useState<number>(1);
 
 ## Screenshots
 
-![alt Pagination](screenshots/shot1.png "Pagination simple usage")
+![alt Pagination](https://raw.githubusercontent.com/mahyarkarimi/chakra-pagination/main/screenshots/shot1.png "Pagination simple usage")
 
 ## Contributing
 
