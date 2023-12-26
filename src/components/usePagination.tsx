@@ -9,7 +9,6 @@ type Pagination = {
     totalPages: number;
     registersPerPage: number;
     currentPage: number;
-    lastPage: number;
     nextPages: number[];
     previousPages: number[];
     siblingsCount: number;
@@ -26,16 +25,14 @@ export function usePagination({
     siblingsCount = 1,
 }: Options): Pagination {
     const currentPage = page;
-    const lastPage = Math.ceil(totalRegisters / registersPerPage);
-    const totalPages = lastPage === 0 ? 1 : lastPage;
+    const totalPages = Math.max(Math.ceil(totalRegisters / registersPerPage), 1);
 
     const previousPages = currentPage > 1 ? generatePagesArray(currentPage - 1 - siblingsCount, currentPage - 1) : [];
-    const nextPages = currentPage < lastPage ? generatePagesArray(currentPage, Math.min(currentPage + siblingsCount, lastPage)) : [];
+    const nextPages = currentPage < totalPages ? generatePagesArray(currentPage, Math.min(currentPage + siblingsCount, totalPages)) : [];
 
     return {
         currentPage,
         totalPages,
-        lastPage,
         nextPages,
         previousPages,
         registersPerPage,

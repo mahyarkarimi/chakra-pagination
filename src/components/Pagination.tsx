@@ -61,7 +61,6 @@ export function Pagination({ currentPage = 1, onPageChange = () => { }, colorSch
         siblingsCount,
         previousPages,
         nextPages,
-        lastPage,
         totalPages,
     } = usePagination({
         totalRegisters: total,
@@ -105,19 +104,19 @@ export function Pagination({ currentPage = 1, onPageChange = () => { }, colorSch
                     ))
                     : null}
 
-                {currentPage + siblingsCount < lastPage ? (
+                {currentPage + siblingsCount < totalPages ? (
                     <>
-                        {currentPage + 1 + siblingsCount < lastPage ? (
+                        {currentPage + 1 + siblingsCount < totalPages ? (
                             <Text color='gray.300' w='8' textAlign='center'>
                                 ...
                             </Text>
                         ) : null}
-                        <PaginationItem colorScheme={colorScheme} onPageChange={onPageChange} page={lastPage} />
+                        <PaginationItem colorScheme={colorScheme} onPageChange={onPageChange} page={totalPages} />
                     </>
                 ) : null}
             </>
         )
-    }, [currentPage, siblingsCount, previousPages, nextPages, lastPage, colorScheme]);
+    }, [currentPage, siblingsCount, previousPages, nextPages, totalPages, colorScheme]);
     return (
         <Stack direction='row' mt='8' justify='center' align='center' spacing='6' margin={1}>
             <Stack direction='row' spacing='2'>
@@ -138,7 +137,7 @@ export function Pagination({ currentPage = 1, onPageChange = () => { }, colorSch
                     fontSize='xs'
                     width='4'
                     colorScheme={colorScheme}
-                    isDisabled={currentPage === lastPage}
+                    isDisabled={currentPage === totalPages}
                     variant='outline'
                     onClick={() => onPageChange(currentPage + 1)}
                 >
