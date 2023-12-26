@@ -61,7 +61,7 @@ Here are a few examples demonstrating how to use the `Pagination` component:
 Basic usage:
 
 ```jsx
-...
+... 
 const [currentPage, setCurrentPage] = useState<number>(1);
 
 <Pagination
@@ -71,6 +71,10 @@ const [currentPage, setCurrentPage] = useState<number>(1);
 />
 ...
 ```
+
+## Screenshots
+
+![alt Pagination](screenshots/shot1.png "Pagination simple usage")
 
 ## Contributing
 
