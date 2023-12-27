@@ -1,6 +1,6 @@
 {
   "name": "chakra-pagination",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -19,6 +19,10 @@
     "paginator",
     "pagination"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mahyarkarimi/chakra-pagination.git"
+  },
   "author": "Mahyar Karimi",
   "license": "MIT",
   "peerDependencies": {

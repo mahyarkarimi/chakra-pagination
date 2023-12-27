@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Stack, Button, Text, ThemeTypings } from '@chakra-ui/react';
+import { Stack, Button, Text, ThemeTypings, useColorModeValue } from '@chakra-ui/react';
 import { usePagination } from './usePagination';
 
 type PaginationItemProps = {
@@ -19,6 +19,8 @@ type PaginationProps = {
 };
 
 function PaginationItem({ isCurrent = false, page, onPageChange, colorScheme }: PaginationItemProps) {
+    const value = useColorModeValue(`${colorScheme}.100`, `${colorScheme}.800`)
+
     if (isCurrent) {
         return (
             <Button
@@ -42,10 +44,9 @@ function PaginationItem({ isCurrent = false, page, onPageChange, colorScheme }: 
             size='sm'
             fontSize='xs'
             width='4'
-            bg='gray.200'
             textColor={colorScheme}
             _hover={{
-                bg: `${colorScheme}.100`,
+                bg: value,
             }}
             onClick={() => onPageChange(page)}
         >
