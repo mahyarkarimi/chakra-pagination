@@ -4,7 +4,7 @@
 [![NPM License](https://img.shields.io/npm/l/all-contributors.svg?style=flat)](https://github.com/mahyarkarimi/chakra-pagination/blob/master/LICENSE)
 [![NPM Downloads](https://img.shields.io/npm/dt/chakra-pagination.svg?style=flat)]()  
 
-<span style="color: red;">**Since there is a Pagination component in Chakra v3, use this package unless you are using chakra v2 or v1**</div>
+<h2 style="color: red;">**Since there is a Pagination component in Chakra v3, use this package unless you are using chakra v2 or v1**</h2>
 
 <br />
 This is a pagination UI component designed for the popular [Chakra UI](https://github.com/chakra-ui/chakra-ui) component library. The library provides an easy-to-use and customizable pagination component that can be integrated seamlessly into your React applications.
