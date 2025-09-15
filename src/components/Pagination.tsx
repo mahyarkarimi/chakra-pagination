@@ -18,7 +18,12 @@ type PaginationProps = {
     buttonCounts?: 1 | 2;
 };
 
-function PaginationItem({ isCurrent = false, page, onPageChange, colorScheme }: PaginationItemProps) {
+const PaginationItem = ({ 
+    isCurrent = false, 
+    page, 
+    onPageChange, 
+    colorScheme 
+}: PaginationItemProps) =>{
     const value = useColorModeValue(`${colorScheme}.100`, `${colorScheme}.800`)
 
     if (isCurrent) {
@@ -56,8 +61,14 @@ function PaginationItem({ isCurrent = false, page, onPageChange, colorScheme }: 
 }
 
 
-
-export function Pagination({ currentPage = 1, onPageChange = () => { }, colorScheme = 'blackAlpha', total = 0, perPage = 10, buttonCounts = 1 }: PaginationProps) {
+export const Pagination = ({ 
+    currentPage = 1, 
+    onPageChange = () => { }, 
+    colorScheme = 'blackAlpha', 
+    total = 0, 
+    perPage = 10, 
+    buttonCounts = 1 
+}: PaginationProps) =>{
     const {
         siblingsCount,
         previousPages,
@@ -70,7 +81,7 @@ export function Pagination({ currentPage = 1, onPageChange = () => { }, colorSch
         registersPerPage: perPage,
     });
 
-    if (total === 0) return '';
+    if (total === 0) return <></>;
 
     const renderPages = useMemo(() => {
         if (totalPages <= 5) {
